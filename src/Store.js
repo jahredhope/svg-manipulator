@@ -10,7 +10,9 @@ function createFromString(stringValue) {
 }
 const svgString = `<svg viewbox="0 0 24 24">
   <circle cx="6" cy="5" r="4" fill="blue" />
-  <rect x="10" y="3" width="4" height="10" fill="green" />
+  <path d="M20 20 L 5 20 L 5 10 Z" fill="orange" />
+  <path d="M10 10 H 18 V 22 H 18 Z" fill="yellow" />
+  <rect x="9" y="3" width="6" height="12" fill="green" />
 </svg>`;
 
 function addStroke(val) {
@@ -82,26 +84,39 @@ export default class SvgStore {
     if (!this.isCurrentTagAPath) {
       return '';
     }
-    const obj = XmlReader.parseSync(this.currentTag);
-    const pathString = obj.attributes.d;
-    console.log('obj', obj);
-    const ast = parsePath(pathString);
-    console.log('ast', ast);
-    return pathString;
+    try {
+      const obj = XmlReader.parseSync(this.currentTag);
+      const pathString = obj.attributes.d;
+      return pathString;
+    } catch (error) {
+      console.error('An error when parsing xml', error);
+    }
   }
   @computed
   get currentTagPathCommands() {
     if (!this.isCurrentTagAPath) {
       return undefined;
     }
-    const obj = XmlReader.parseSync(this.currentTag);
-    const pathString = obj.attributes.d;
-    console.log('obj', obj);
-    const ast = parsePath(pathString);
-    console.log('ast', ast);
-    return ast.commands;
+    try {
+      const obj = XmlReader.parseSync(this.currentTag);
+      const pathString = obj.attributes.d;
+      // console.log('obj', obj);
+      if (!pathString) {
+        return [];
+      }
+      const ast = parsePath(pathString);
+      // console.log('ast', ast);
+      return ast.commands;
+    } catch (error) {
+      console.error(
+        'An error occured when parsing xml in currentTagPathCommands',
+        error
+      );
+      return [];
+    }
   }
   @observable showHelp = false;
+  @observable showLines = true;
   @computed
   get currentTagStart() {
     return this.svgString.lastIndexOf('<', this.currentCursorIndex);
@@ -114,6 +129,10 @@ export default class SvgStore {
   @action.bound
   toggleStroke() {
     this.showStroke = !this.showStroke;
+  }
+  @action.bound
+  toggleLines() {
+    this.showLines = !this.showLines;
   }
   @action.bound
   setSvgString(val) {

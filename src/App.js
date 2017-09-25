@@ -14,17 +14,17 @@ import Section from './Section';
 import Header from './Header';
 import Card from './Card';
 
-
-import './reset'
+import './reset';
 
 injectGlobal`
   * {
     box-sizing: border-box;
   }
   body {
+    --white: hsl(0, 0%, 100%);
     --dark-blue: hsl(220, 35%, 14%);
     --breakpoint: 740px;
-    --light-gray: hsl(0,0%,97%);
+    --light-gray: hsl(0,0%,96%);
     --font-family: Helvetica;
     --light-blue: hsl(220,80%,86%);
 
@@ -53,7 +53,7 @@ const RightPanel = styled.div`flex: 1 1 100%;`;
 import svgObjectToString from './svgObjectToString';
 
 @observer
-class SvgPreview extends React.Component {
+class App extends React.Component {
   render() {
     const { store } = this.props;
 
@@ -64,7 +64,7 @@ class SvgPreview extends React.Component {
         <Columns>
           <div last>
             {!store.isValid && <h1>INVALID</h1>}
-            <Preview svg={store.displaySvgString} />
+            <Preview svg={store.displaySvgString} showLines={store.showLines} />
           </div>
           <div>
             <Card>
@@ -78,22 +78,34 @@ class SvgPreview extends React.Component {
                 />
                 <label htmlFor="showStroke">Show Stroke</label>
               </Section>
+              <Section>
+                <input
+                  id="showLines"
+                  name="showLines"
+                  type="checkbox"
+                  checked={store.showLines}
+                  onChange={store.toggleLines}
+                />
+                <label htmlFor="showLines">Show Lines</label>
+              </Section>
             </Card>
             {store.showHelp && <Help />}
-            <HeadedBox heading="Current tag">
-              <code>{store.currentTag}</code>
-            </HeadedBox>
+            {store.currentTag && (
+              <HeadedBox heading="Current tag">
+                <code>{store.currentTag}</code>
+              </HeadedBox>
+            )}
             {/* <code>{store.displaySvgString}</code> */}
             {store.isCurrentTagAPath && (
               <HeadedBox heading="Current path">
-                <code>{store.currentTagPath.toString()}</code>
+                <code>{store.currentTagPath}</code>
               </HeadedBox>
             )}
             {store.isCurrentTagAPath && (
               <Card>
-                <Section>
+                <HeadedBox heading="Path breakdown">
                   <PathBreakdown commands={store.currentTagPathCommands} />
-                </Section>
+                </HeadedBox>
               </Card>
             )}
           </div>
@@ -103,8 +115,8 @@ class SvgPreview extends React.Component {
   }
 }
 
-SvgPreview.propTypes = {
+App.propTypes = {
   children: PropTypes.any
 };
 
-export default SvgPreview;
+export default App;

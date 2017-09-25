@@ -13,7 +13,7 @@ const Heading = styled.div`
   font-size: var(--font-size-heading);
   text-align: center;
   border-bottom: var(--dividing-border);
-  padding: 6px;
+  padding: 12px 6px 6px;
 `;
 
 const Content = styled.div`font-size: var(--font-size-standard);`;

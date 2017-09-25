@@ -6,21 +6,23 @@ const PreviewContainerContainer = styled.div`
   display: block;
   position: relative;
   width: fit-content;
+  background-color: var(--white);
 `;
 
-const HorLine = styled.div`
+const Line = styled.div`
   position: absolute;
-  z-index: -1;
+  opacity: 0.4;
+  z-index: 1;
+  background-color: var(--dark-blue);
+`;
+
+const HorLine = styled(Line)`
   height: 1px;
   width: 100%;
-  background-color: gray;
 `;
-const VertLine = styled.div`
-  position: absolute;
-  z-index: -1;
+const VertLine = styled(Line)`
   width: 1px;
   height: 100%;
-  background-color: gray;
 `;
 
 const PreviewContainer = styled.div`
@@ -30,11 +32,11 @@ const PreviewContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   svg {
-    border: 1px solid red;
+    border: 1px solid var(--dark-blue);
     min-width: 200px;
     min-height: 200px;
     max-height: 600px;
-    ${'' /* max-height: 800px; */}
+    ${'' /* max-height: 800px; */};
   }
 `;
 const Container = styled.div`
@@ -43,20 +45,18 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px;
-`
+`;
 const columns = [25, 50, 75];
 const rows = [25, 50, 75];
 
-export default function({svg}) {
+export default function({ svg, showLines }) {
   return (
     <Container>
-    <PreviewContainerContainer>
-      {columns.map(val => <VertLine style={{ left: `${val}%` }} />)}
-      {rows.map(val => <HorLine style={{ top: `${val}%` }} />)}
-      <PreviewContainer
-        dangerouslySetInnerHTML={{ __html: svg }}
-      />
-    </PreviewContainerContainer>
+      <PreviewContainerContainer>
+        {showLines && columns.map(val => <VertLine style={{ left: `${val}%` }} />)}
+        {showLines && rows.map(val => <HorLine style={{ top: `${val}%` }} />)}
+        <PreviewContainer dangerouslySetInnerHTML={{ __html: svg }} />
+      </PreviewContainerContainer>
     </Container>
   );
 }

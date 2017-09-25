@@ -11,7 +11,10 @@ import styles from 'codemirror/lib/codemirror.css';
 
 console.log('styles', styles);
 
-const PrintedSectionsColumn = styled.div`padding-right: 5px;`;
+const PrintedSectionsColumn = styled.div`
+  margin-bottom: 12px;
+  padding-right: 6px;
+`;
 
 var options = {
   lineNumbers: true,

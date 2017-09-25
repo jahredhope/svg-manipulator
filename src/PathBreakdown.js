@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { injectGlobal } from 'styled-components';
 import md5 from 'md5';
 
+import HeadedBox from './HeadedBox'
+
 import { observer } from 'mobx-react';
 
 const getHue = keyString => {
@@ -37,7 +39,7 @@ const CommandLabel = styled.div`
 @observer
 export default class PathBreakdown extends Component {
   render() {
-    const { commands } = this.props;
+    const { commands = [] } = this.props;
     return (
       <div>
         {commands.map(({ type, params }, index) => (

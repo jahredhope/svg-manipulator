@@ -8,7 +8,7 @@ const Column = styled.div`
   @media (min-width: 740px) {
     flex-basis: 0;
     flex-grow: 1;
-    padding: 0 10px;
+    padding: 0 18px;
     .columns_tight & {
       padding: 0 5px;
     }

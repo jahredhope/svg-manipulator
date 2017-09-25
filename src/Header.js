@@ -14,7 +14,7 @@ const Container = styled.div`
   background-color: var(--dark-blue);
 `
 const Title = styled.span`
-  font-size: --font-size-heading;
+  font-size: var(--font-size-standard);
 `
 
 export default function() {
