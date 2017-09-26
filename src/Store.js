@@ -4,6 +4,16 @@ import { parse as parsePath, stringify as stringifyPath } from 'path-ast';
 
 import stripParent from './stripParent';
 
+function simplifyPathAst(ast, level) {
+  ast.commands.forEach(command => {
+    if(command.params) {
+      Object.keys(command.params).forEach(key => {
+        command.params[key] = Math.round(command.params[key]*level)/level
+      })
+    }
+  })
+}
+
 function createFromString(stringValue) {
   const obj = XmlReader.parseSync(stringValue);
   return stripParent(obj);
@@ -38,7 +48,14 @@ export default class SvgStore {
     this.svgString = svgString;
     this.svgObject = observable(svgObject);
   }
+
+  @observable showHelp = false;
   @observable showStroke = true;
+  @observable showLines = true;
+  @observable currentCursorIndex = -1;
+  @observable svgString = '';
+  @observable simplifyOnTransform = true;
+
   @computed
   get isValid() {
     const doc = oParser.parseFromString(this.svgString, 'image/svg+xml');
@@ -54,11 +71,23 @@ export default class SvgStore {
       return this.svgString;
     }
     let val =
-      this.svgString.substring(0, this.currentTagStart) +
+      this.beforeCurrentTag +
       this.currentTag +
       addStroke(this.currentTag) +
-      this.svgString.substring(this.currentTagEnd);
+      this.afterCurrentTag;
     return val;
+  }
+  @computed
+  get showCommands() {
+    return this.isCurrentTagAPath;
+  }
+  @computed
+  get beforeCurrentTag() {
+    return this.svgString.substring(0, this.currentTagStart);
+  }
+  @computed
+  get afterCurrentTag() {
+    return this.svgString.substring(this.currentTagEnd);
   }
   @computed
   get currentTag() {
@@ -115,8 +144,6 @@ export default class SvgStore {
       return [];
     }
   }
-  @observable showHelp = false;
-  @observable showLines = true;
   @computed
   get currentTagStart() {
     return this.svgString.lastIndexOf('<', this.currentCursorIndex);
@@ -138,6 +165,71 @@ export default class SvgStore {
   setSvgString(val) {
     this.svgString = val;
   }
-  @observable currentCursorIndex = -1;
-  @observable svgString = '';
+  scalePath = val => {
+    const ast = parsePath(this.currentTagPath);
+    ast.scale(val);
+    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel)
+    this.replaceCurrentPath(stringifyPath(ast));
+  };
+  @action.bound
+  replaceCurrentPath(newPath) {
+    const currentTagPath = this.currentTagPath;
+    const currentTag = this.currentTag;
+
+    const newCurrentTag = currentTag.replace(
+      `"${currentTagPath}"`,
+      `"${newPath}"`
+    );
+    this.svgString =
+      this.beforeCurrentTag + newCurrentTag + this.afterCurrentTag;
+  }
+  scaleBigger = () => {
+    this.scalePath(1.1);
+  };
+  scaleSmaller = () => {
+    this.scalePath(0.9);
+  };
+  rotatePath = val => {
+    const ast = parsePath(this.currentTagPath);
+    ast.rotate(val);
+    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel)
+    this.replaceCurrentPath(stringifyPath(ast));
+  };
+
+  rotateLeft = () => {
+    this.rotatePath(-15);
+  };
+  rotateRight = () => {
+    this.rotatePath(15);
+  };
+  pathTranslate = (x, y) => {
+    const ast = parsePath(this.currentTagPath);
+    ast.translate(x, y);
+    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel)
+    this.replaceCurrentPath(stringifyPath(ast));
+  };
+
+  pathTranslateLeft = () => {
+    this.pathTranslate(-1, 0);
+  };
+  pathTranslateRight = () => {
+    this.pathTranslate(1, 0);
+  };
+  pathTranslateUp = () => {
+    this.pathTranslate(0, -1);
+  };
+  pathTranslateDown = () => {
+    this.pathTranslate(0, 1);
+  };
+  @observable
+  simplifycationLevel = 100;
+  simplifyPath = () => {
+    const ast = parsePath(this.currentTagPath);
+    simplifyPathAst(ast, this.simplifycationLevel)
+    this.replaceCurrentPath(stringifyPath(ast));
+  };
+  @action.bound
+  toggleSimplifyOnTransform() {
+    this.simplifyOnTransform = !this.simplifyOnTransform
+  }
 }

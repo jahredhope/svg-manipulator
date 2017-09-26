@@ -12,9 +12,19 @@ import HeadedBox from './HeadedBox';
 import PathBreakdown from './PathBreakdown';
 import Section from './Section';
 import Header from './Header';
+import PathActions from './PathActions';
 import Card from './Card';
 
 import './reset';
+
+const pathMethods = [
+  'scale',
+  'translate',
+  'rotate',
+  'reflectX',
+  'reflectY',
+  'toAbsolute'
+]
 
 injectGlobal`
   * {
@@ -47,6 +57,12 @@ const Container = styled.div`
   flex-direction: row;
 `;
 
+const JustifyCenter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`
+
 const LeftPanel = styled.div`flex: 1 1 100%;`;
 const RightPanel = styled.div`flex: 1 1 100%;`;
 
@@ -65,6 +81,7 @@ class App extends React.Component {
           <div last>
             {!store.isValid && <h1>INVALID</h1>}
             <Preview svg={store.displaySvgString} showLines={store.showLines} />
+            {store.showCommands && <JustifyCenter><PathActions store={store} /></JustifyCenter>}
           </div>
           <div>
             <Card>
@@ -88,6 +105,16 @@ class App extends React.Component {
                 />
                 <label htmlFor="showLines">Show Lines</label>
               </Section>
+              <Section>
+                <input
+                  id="simplifyOnTransform"
+                  name="simplifyOnTransform"
+                  type="checkbox"
+                  checked={store.simplifyOnTransform}
+                  onChange={store.toggleSimplifyOnTransform}
+                />
+                <label htmlFor="simplifyOnTransform">Simplify On Transform</label>
+              </Section>
             </Card>
             {store.showHelp && <Help />}
             {store.currentTag && (
@@ -98,8 +125,12 @@ class App extends React.Component {
             {/* <code>{store.displaySvgString}</code> */}
             {store.isCurrentTagAPath && (
               <HeadedBox heading="Current path">
+                <div>
                 <code>{store.currentTagPath}</code>
+                <input type="text" value={store.currentTagPath} onChange={(event) => store.replaceCurrentPath(event.target.value)}></input>
+                </div>
               </HeadedBox>
+
             )}
             {store.isCurrentTagAPath && (
               <Card>

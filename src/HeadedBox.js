@@ -23,7 +23,7 @@ export default function({ heading, children }) {
     <Container>
       <Heading>{heading}</Heading>
       <Content>
-        <Section>{children}</Section>
+        {children}
       </Content>
     </Container>
   );

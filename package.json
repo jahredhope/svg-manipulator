@@ -58,6 +58,7 @@
     "path-ast": "^1.1.0",
     "react": "next",
     "react-codemirror": "^1.0.0",
+    "react-codemirror2": "^2.0.0",
     "react-codemod": "^4.0.0",
     "react-dom": "next",
     "react-router": "^4.1.2",

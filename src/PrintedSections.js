@@ -6,7 +6,8 @@ import Card from './Card';
 
 require('codemirror/mode/htmlmixed/htmlmixed');
 
-var CodeMirror = require('react-codemirror');
+import CodeMirror from 'react-codemirror';
+// import CodeMirror from 'react-codemirror2';
 import styles from 'codemirror/lib/codemirror.css';
 
 console.log('styles', styles);
@@ -22,11 +23,14 @@ var options = {
 };
 
 export default observer(function({ store }) {
+  console.log('Giving CodeMirror', store.svgString)
   return (
     <PrintedSectionsColumn>
       <CodeMirror
         value={store.svgString}
+        autoSave={true}
         onChange={store.setSvgString}
+        onViewportChange={() => console.log('onViewportChange called')}
         onCursorActivity={val => {
           store.currentCursorIndex = val.indexFromPos(val.getCursor());
         }}
