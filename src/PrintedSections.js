@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { injectGlobal } from 'styled-components';
 import { observer } from 'mobx-react';
-import Card from './Card';
+import {Card} from './styleguide';
 
 require('codemirror/mode/htmlmixed/htmlmixed');
 
 import CodeMirror from 'react-codemirror';
 // import CodeMirror from 'react-codemirror2';
-import styles from 'codemirror/lib/codemirror.css';
-
-console.log('styles', styles);
+import 'codemirror/lib/codemirror.css';
 
 const PrintedSectionsColumn = styled.div`
   margin-bottom: 12px;
@@ -23,7 +21,6 @@ var options = {
 };
 
 export default observer(function({ store }) {
-  console.log('Giving CodeMirror', store.svgString)
   return (
     <PrintedSectionsColumn>
       <CodeMirror

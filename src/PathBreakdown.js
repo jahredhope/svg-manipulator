@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
 import md5 from 'md5';
-
-import HeadedBox from './HeadedBox'
 
 import { observer } from 'mobx-react';
 

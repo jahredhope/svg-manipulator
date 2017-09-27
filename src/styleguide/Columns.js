@@ -24,8 +24,8 @@ const Column = styled.div`
 export default function Columns({ children }) {
   return (
     <Container>
-      {children.map(child => (
-        <Column style={{ order: child.props.last ? 5 : 0 }}>{child}</Column>
+      {children.map((child, index) => (
+        <Column key={index} style={{ order: child.props.last ? 5 : 0 }}>{child}</Column>
       ))}
     </Container>
   );

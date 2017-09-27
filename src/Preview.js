@@ -46,6 +46,7 @@ const Container = styled.div`
   align-items: center;
   padding: 30px;
 `;
+
 const columns = [25, 50, 75];
 const rows = [25, 50, 75];
 
@@ -53,8 +54,8 @@ export default function({ svg, showLines }) {
   return (
     <Container>
       <PreviewContainerContainer>
-        {showLines && columns.map(val => <VertLine style={{ left: `${val}%` }} />)}
-        {showLines && rows.map(val => <HorLine style={{ top: `${val}%` }} />)}
+        {showLines && columns.map(val => <VertLine key={val} style={{ left: `${val}%` }} />)}
+        {showLines && rows.map(val => <HorLine key={val} style={{ top: `${val}%` }} />)}
         <PreviewContainer dangerouslySetInnerHTML={{ __html: svg }} />
       </PreviewContainerContainer>
     </Container>

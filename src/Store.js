@@ -1,17 +1,18 @@
 import { observable, computed, action } from 'mobx';
 import XmlReader from 'xml-reader';
 import { parse as parsePath, stringify as stringifyPath } from 'path-ast';
+import getBounds from './getBounds';
 
 import stripParent from './stripParent';
 
 function simplifyPathAst(ast, level) {
   ast.commands.forEach(command => {
-    if(command.params) {
+    if (command.params) {
       Object.keys(command.params).forEach(key => {
-        command.params[key] = Math.round(command.params[key]*level)/level
-      })
+        command.params[key] = Math.round(command.params[key] * level) / level;
+      });
     }
-  })
+  });
 }
 
 function createFromString(stringValue) {
@@ -39,6 +40,15 @@ function addStroke(val) {
   return parent.innerHTML;
 }
 
+function addRect(bounds) {
+  if (!bounds) {
+    return '';
+  }
+  const { top, left, right, bottom } = bounds;
+  return `<rect x="${left}" y="${top}" width="${right - left}" height="${bottom -
+    top}" stroke="gray" fill="none" stroke-width=${0.5} />`;
+}
+
 const svgObject = createFromString(svgString);
 
 const oParser = new DOMParser();
@@ -49,12 +59,14 @@ export default class SvgStore {
     this.svgObject = observable(svgObject);
   }
 
+  @observable svgString = '';
   @observable showHelp = false;
-  @observable showStroke = true;
+  @observable showStroke = false;
+  @observable showBounds = true;
   @observable showLines = true;
   @observable currentCursorIndex = -1;
-  @observable svgString = '';
   @observable simplifyOnTransform = true;
+  @observable simplifycationLevel = 100;
 
   @computed
   get isValid() {
@@ -67,13 +79,11 @@ export default class SvgStore {
     if (!this.currentTag) {
       return this.svgString;
     }
-    if (!this.showStroke) {
-      return this.svgString;
-    }
     let val =
       this.beforeCurrentTag +
+      (this.showBounds ? addRect(this.currentTagBounds) : '') +
       this.currentTag +
-      addStroke(this.currentTag) +
+      (this.showStroke ? addStroke(this.currentTag) : '') +
       this.afterCurrentTag;
     return val;
   }
@@ -88,6 +98,17 @@ export default class SvgStore {
   @computed
   get afterCurrentTag() {
     return this.svgString.substring(this.currentTagEnd);
+  }
+  @computed
+  get currentTagBounds() {
+    try {
+      const ast = parsePath(this.currentTagPath);
+      ast.toAbsolute();
+      return getBounds(ast);
+    } catch (error) {
+      console.error('Error getting current Tag bounds', error);
+      return {};
+    }
   }
   @computed
   get currentTag() {
@@ -129,12 +150,10 @@ export default class SvgStore {
     try {
       const obj = XmlReader.parseSync(this.currentTag);
       const pathString = obj.attributes.d;
-      // console.log('obj', obj);
       if (!pathString) {
         return [];
       }
       const ast = parsePath(pathString);
-      // console.log('ast', ast);
       return ast.commands;
     } catch (error) {
       console.error(
@@ -150,12 +169,15 @@ export default class SvgStore {
   }
   @computed
   get currentTagEnd() {
-    console.log('svgString', svgString.length);
     return this.svgString.indexOf('>', this.currentCursorIndex) + 1;
   }
   @action.bound
   toggleStroke() {
     this.showStroke = !this.showStroke;
+  }
+  @action.bound
+  toggleBounds() {
+    this.showBounds = !this.showBounds;
   }
   @action.bound
   toggleLines() {
@@ -168,7 +190,7 @@ export default class SvgStore {
   scalePath = val => {
     const ast = parsePath(this.currentTagPath);
     ast.scale(val);
-    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel)
+    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel);
     this.replaceCurrentPath(stringifyPath(ast));
   };
   @action.bound
@@ -192,7 +214,7 @@ export default class SvgStore {
   rotatePath = val => {
     const ast = parsePath(this.currentTagPath);
     ast.rotate(val);
-    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel)
+    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel);
     this.replaceCurrentPath(stringifyPath(ast));
   };
 
@@ -205,7 +227,7 @@ export default class SvgStore {
   pathTranslate = (x, y) => {
     const ast = parsePath(this.currentTagPath);
     ast.translate(x, y);
-    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel)
+    this.simplifyOnTransform && simplifyPathAst(ast, this.simplifycationLevel);
     this.replaceCurrentPath(stringifyPath(ast));
   };
 
@@ -221,15 +243,13 @@ export default class SvgStore {
   pathTranslateDown = () => {
     this.pathTranslate(0, 1);
   };
-  @observable
-  simplifycationLevel = 100;
   simplifyPath = () => {
     const ast = parsePath(this.currentTagPath);
-    simplifyPathAst(ast, this.simplifycationLevel)
+    simplifyPathAst(ast, this.simplifycationLevel);
     this.replaceCurrentPath(stringifyPath(ast));
   };
   @action.bound
   toggleSimplifyOnTransform() {
-    this.simplifyOnTransform = !this.simplifyOnTransform
+    this.simplifyOnTransform = !this.simplifyOnTransform;
   }
 }

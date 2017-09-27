@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
 
-import Section from './Section';
 import Card from './Card';
 
 const Container = styled(Card)`
@@ -22,9 +21,7 @@ export default function({ heading, children }) {
   return (
     <Container>
       <Heading>{heading}</Heading>
-      <Content>
-        {children}
-      </Content>
+      <Content>{children}</Content>
     </Container>
   );
 }

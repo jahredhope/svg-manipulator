@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
 
 import arrowDown from './arrow_down.svg';
 import arrowUp from './arrow_up.svg';
@@ -10,12 +10,6 @@ import bigSquare from './square_big.svg';
 import smallSquare from './square_small.svg';
 import rotateLeft from './rotate_left.svg';
 import rotateRight from './rotate_right.svg';
-
-const Button = styled.button`
-  display: block;
-  line-height: 45px;
-  padding: 0 18px;
-`;
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -45,8 +39,7 @@ const DownArrow = styled(Icon)`grid-area: bottom;`
 const RightArrow = styled(Icon)`grid-area: right;`
 const LeftArrow = styled(Icon)`grid-area: left;`
 
-export default function({ store }) {
-  console.log('arrowDown', arrowDown);
+export default function PathActions({ store }) {
   return (
     <ButtonGroup>
       <Grid>
@@ -61,7 +54,11 @@ export default function({ store }) {
         <LeftArrow src={rotateLeft} onClick={store.rotateLeft} />
         <RightArrow src={rotateRight} onClick={store.rotateRight} />
       </Grid>
-      <Button onClick={store.simplifyPath}>Simplify</Button>
+      {/* <Button onClick={store.simplifyPath}>Simplify</Button> */}
     </ButtonGroup>
   );
+}
+
+PathActions.propTypes = {
+  store: PropTypes.object.isRequired
 }

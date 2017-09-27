@@ -1,7 +1,5 @@
 import { injectGlobal } from 'styled-components';
 
-console.log('Reset CSS')
-
 injectGlobal`
 
 /* http://meyerweb.com/eric/tools/css/reset/
