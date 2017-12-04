@@ -8,23 +8,41 @@ import Preview from './Preview';
 import PathBreakdown from './PathBreakdown';
 import Header from './Header';
 import PathActions from './PathActions';
+import styled from 'styled-components';
 
 import { JustifyCenter, Columns, Card, Section, HeadedBox } from './styleguide';
 
 import './reset';
 
+const ThemedApp = styled.div`
+  background-color: '#eeeeee';
+  color: '#111111';
+`;
+
 @observer
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isClient: false
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      isClient: true
+    });
+  }
   static propTypes = {
     store: PropTypes.object.isRequired
   };
   render() {
     const { store } = this.props;
+    const { isClient } = this.state;
 
     return (
-      <div>
+      <ThemedApp>
         <Header />
-        <PrintedSections store={store} />
+        <PrintedSections isClient={isClient} store={store} />
         <Columns>
           <div last>
             {!store.isValid && <h1>INVALID</h1>}
@@ -75,9 +93,7 @@ export default class App extends React.Component {
                   checked={store.simplifyOnTransform}
                   onChange={store.toggleSimplifyOnTransform}
                 />
-                <label htmlFor="simplifyOnTransform">
-                  Simplify On Transform
-                </label>
+                <label htmlFor="simplifyOnTransform">Simplify On Transform</label>
               </Section>
             </Card>
             {store.showHelp && <Help />}
@@ -118,7 +134,7 @@ export default class App extends React.Component {
             )}
           </div>
         </Columns>
-      </div>
+      </ThemedApp>
     );
   }
 }

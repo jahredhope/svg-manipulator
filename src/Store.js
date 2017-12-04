@@ -51,7 +51,7 @@ function addRect(bounds) {
 
 const svgObject = createFromString(svgString);
 
-const oParser = new DOMParser();
+const oParser = typeof DOMParser !== 'undefined' ? new DOMParser() : { parseFromString: () => {} };
 
 export default class SvgStore {
   constructor() {
@@ -70,6 +70,9 @@ export default class SvgStore {
 
   @computed
   get isValid() {
+    if (global.__SERVER_RENDER) {
+      return true;
+    }
     const doc = oParser.parseFromString(this.svgString, 'image/svg+xml');
     const failed = doc.documentElement.innerHTML.indexOf('<parsererror') > -1;
     return !failed;
@@ -112,17 +115,10 @@ export default class SvgStore {
   }
   @computed
   get currentTag() {
-    if (
-      this.currentCursorIndex < 0 ||
-      this.currentTagStart === 0 ||
-      this.currentTagEnd === 0
-    ) {
+    if (this.currentCursorIndex < 0 || this.currentTagStart === 0 || this.currentTagEnd === 0) {
       return '';
     }
-    const val = this.svgString.substring(
-      this.currentTagStart,
-      this.currentTagEnd
-    );
+    const val = this.svgString.substring(this.currentTagStart, this.currentTagEnd);
     return val;
   }
   @computed
@@ -156,10 +152,7 @@ export default class SvgStore {
       const ast = parsePath(pathString);
       return ast.commands;
     } catch (error) {
-      console.error(
-        'An error occured when parsing xml in currentTagPathCommands',
-        error
-      );
+      console.error('An error occured when parsing xml in currentTagPathCommands', error);
       return [];
     }
   }
@@ -198,12 +191,8 @@ export default class SvgStore {
     const currentTagPath = this.currentTagPath;
     const currentTag = this.currentTag;
 
-    const newCurrentTag = currentTag.replace(
-      `"${currentTagPath}"`,
-      `"${newPath}"`
-    );
-    this.svgString =
-      this.beforeCurrentTag + newCurrentTag + this.afterCurrentTag;
+    const newCurrentTag = currentTag.replace(`"${currentTagPath}"`, `"${newPath}"`);
+    this.svgString = this.beforeCurrentTag + newCurrentTag + this.afterCurrentTag;
   }
   scaleBigger = () => {
     this.scalePath(1.1);

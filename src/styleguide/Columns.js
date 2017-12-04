@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { injectGlobal } from 'styled-components';
 
-const Container = styled.div`@media (min-width: 740px) {display: flex;}`;
+const Container = styled.div`
+  @media (min-width: 740px) {
+    display: flex;
+  }
+`;
 
 const Column = styled.div`
   @media (min-width: 740px) {
@@ -25,7 +29,9 @@ export default function Columns({ children }) {
   return (
     <Container>
       {children.map((child, index) => (
-        <Column key={index} style={{ order: child.props.last ? 5 : 0 }}>{child}</Column>
+        <Column key={index} style={{ order: child.props.last ? 5 : 0 }}>
+          {child}
+        </Column>
       ))}
     </Container>
   );
