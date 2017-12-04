@@ -6,6 +6,10 @@ script:
   - npm test
   - npm run build
 
+cache:
+  directories:
+  - node_modules
+
 deploy:
   provider: surge
   project: ./build/
