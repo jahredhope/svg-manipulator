@@ -5,7 +5,7 @@ process.env.PUBLIC_URL = '';
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 
 const jest = require('jest');
 const argv = process.argv.slice(2);
@@ -27,5 +27,6 @@ process.stdout.write = function(chunk, encoding, callback) {
   return realWrite.call(this, chunk, encoding, callback);
 };
 
+argv.push('src');
 
 jest.run(argv);
