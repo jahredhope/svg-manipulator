@@ -45,7 +45,7 @@ export default class App extends React.Component {
         <PrintedSections isClient={isClient} store={store} />
         <Columns>
           <div last>
-            {!store.isValid && <h1>INVALID</h1>}
+            {!store.isValid && <h1>Invalid</h1>}
             <Preview svg={store.displaySvgString} showLines={store.showLines} />
             {store.showCommands && (
               <JustifyCenter>
