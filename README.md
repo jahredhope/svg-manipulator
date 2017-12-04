@@ -2,5 +2,7 @@
 
 # svg-generator
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jahredhope/svg-manipulator.svg)](https://greenkeeper.io/)
+
 Published to Surge
 svg-malnutrition.surge.sh
