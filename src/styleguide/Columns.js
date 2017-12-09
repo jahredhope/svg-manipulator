@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
 
 const Container = styled.div`
   @media (min-width: 740px) {
@@ -36,3 +36,7 @@ export default function Columns({ children }) {
     </Container>
   );
 }
+
+Columns.propTypes = {
+  children: PropTypes.node.isRequired
+};

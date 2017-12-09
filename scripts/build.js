@@ -93,7 +93,10 @@ function printFileSizes(stats, previousSizeMap) {
       };
     });
   assets.sort((a, b) => b.size - a.size);
-  var longestSizeLabelLength = Math.max.apply(null, assets.map(a => stripAnsi(a.sizeLabel).length));
+  var longestSizeLabelLength = Math.max.apply(
+    null,
+    assets.map(a => stripAnsi(a.sizeLabel).length)
+  );
   assets.forEach(asset => {
     var sizeLabel = asset.sizeLabel;
     var sizeLength = stripAnsi(sizeLabel).length;
@@ -102,7 +105,11 @@ function printFileSizes(stats, previousSizeMap) {
       sizeLabel += rightPadding;
     }
     console.log(
-      '  ' + sizeLabel + '  ' + chalk.dim(asset.folder + path.sep) + chalk.cyan(asset.name)
+      '  ' +
+        sizeLabel +
+        '  ' +
+        chalk.dim(asset.folder + path.sep) +
+        chalk.cyan(asset.name)
     );
   });
 }
@@ -151,7 +158,9 @@ function build(previousSizeMap) {
     if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
       // "homepage": "http://user.github.io/project"
       console.log(
-        'The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.'
+        'The project was built assuming it is hosted at ' +
+          chalk.green(publicPath) +
+          '.'
       );
       console.log(
         'You can control this with the ' +
@@ -161,7 +170,9 @@ function build(previousSizeMap) {
           '.'
       );
       console.log();
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log(
+        'The ' + chalk.cyan('build') + ' folder is ready to be deployed.'
+      );
       console.log('To publish it at ' + chalk.green(homepagePath) + ', run:');
       // If script deploy has been added to package.json, skip the instructions
       if (typeof appPackage.scripts.deploy === 'undefined') {
@@ -169,10 +180,14 @@ function build(previousSizeMap) {
         if (useYarn) {
           console.log('  ' + chalk.cyan('yarn') + ' add --dev gh-pages');
         } else {
-          console.log('  ' + chalk.cyan('npm') + ' install --save-dev gh-pages');
+          console.log(
+            '  ' + chalk.cyan('npm') + ' install --save-dev gh-pages'
+          );
         }
         console.log();
-        console.log('Add the following script in your ' + chalk.cyan('package.json') + '.');
+        console.log(
+          'Add the following script in your ' + chalk.cyan('package.json') + '.'
+        );
         console.log();
         console.log('    ' + chalk.dim('// ...'));
         console.log('    ' + chalk.yellow('"scripts"') + ': {');
@@ -193,7 +208,9 @@ function build(previousSizeMap) {
     } else if (publicPath !== '/') {
       // "homepage": "http://mywebsite.com/project"
       console.log(
-        'The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.'
+        'The project was built assuming it is hosted at ' +
+          chalk.green(publicPath) +
+          '.'
       );
       console.log(
         'You can control this with the ' +
@@ -203,11 +220,15 @@ function build(previousSizeMap) {
           '.'
       );
       console.log();
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log(
+        'The ' + chalk.cyan('build') + ' folder is ready to be deployed.'
+      );
       console.log();
     } else {
       // no homepage or "homepage": "http://mywebsite.com"
-      console.log('The project was built assuming it is hosted at the server root.');
+      console.log(
+        'The project was built assuming it is hosted at the server root.'
+      );
       if (homepagePath) {
         // "homepage": "http://mywebsite.com"
         console.log(
@@ -238,7 +259,9 @@ function build(previousSizeMap) {
         );
         console.log();
       }
-      console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
+      console.log(
+        'The ' + chalk.cyan('build') + ' folder is ready to be deployed.'
+      );
       console.log('You may also serve it locally with a static server:');
       console.log();
       if (useYarn) {

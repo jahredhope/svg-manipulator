@@ -1,8 +1,8 @@
 const _ = require('lodash');
 
 export default function getBounds(ast) {
-  if(!ast || !ast.commands) {
-    console.error('Missing from ast', ast)
+  if (!ast || !ast.commands) {
+    console.error('Missing from ast', ast);
     return {};
   }
   const xValues = [];

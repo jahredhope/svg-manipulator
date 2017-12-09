@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
 
 const PreviewContainerContainer = styled.div`
   display: block;
@@ -50,14 +50,23 @@ const Container = styled.div`
 const columns = [25, 50, 75];
 const rows = [25, 50, 75];
 
-export default function({ svg, showLines }) {
+export default function Preview({ svg, showLines }) {
   return (
     <Container>
       <PreviewContainerContainer>
-        {showLines && columns.map(val => <VertLine key={val} style={{ left: `${val}%` }} />)}
-        {showLines && rows.map(val => <HorLine key={val} style={{ top: `${val}%` }} />)}
+        {showLines &&
+          columns.map(val => (
+            <VertLine key={val} style={{ left: `${val}%` }} />
+          ))}
+        {showLines &&
+          rows.map(val => <HorLine key={val} style={{ top: `${val}%` }} />)}
         <PreviewContainer dangerouslySetInnerHTML={{ __html: svg }} />
       </PreviewContainerContainer>
     </Container>
   );
 }
+
+Preview.propTypes = {
+  svg: PropTypes.string.isRequired,
+  showLines: PropTypes.bool.isRequired
+};

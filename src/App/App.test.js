@@ -1,4 +1,4 @@
-import App from './App'
+import App from './';
 
 describe('App', () => {
   it('should be a function', () => {

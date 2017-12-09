@@ -17,7 +17,9 @@ const Param = styled.div`
   min-width: 80px;
 `;
 
-const ParamValue = styled.code`color: black;`;
+const ParamValue = styled.code`
+  color: black;
+`;
 const ParamKey = styled.label`
   color: ${({ keyString }) => `hsl(${getHue(keyString)}, 50%, 50%)`};
 `;
@@ -32,7 +34,7 @@ const Command = styled.div`
 const CommandLabel = styled.div`
   min-width: 50px;
   display: inline-block;
-`
+`;
 
 @observer
 export default class PathBreakdown extends Component {
@@ -56,3 +58,6 @@ export default class PathBreakdown extends Component {
     );
   }
 }
+PathBreakdown.propTypes = {
+  commands: PropTypes.array.isRequired
+};

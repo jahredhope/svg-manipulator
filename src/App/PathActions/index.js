@@ -22,9 +22,9 @@ const Grid = styled.div`
   grid-template-columns: repeat(3, 24px);
   grid-template-rows: repeat(3, 24px);
   grid-template-areas:
-  ". top ."
-  "left . right"
-  ". bottom ."
+    '. top .'
+    'left . right'
+    '. bottom .';
 `;
 
 const Icon = styled.img`
@@ -32,12 +32,20 @@ const Icon = styled.img`
   height: 24px;
   width: 24px;
   cursor: pointer;
-`
+`;
 
-const UpArrow = styled(Icon)`grid-area: top;`
-const DownArrow = styled(Icon)`grid-area: bottom;`
-const RightArrow = styled(Icon)`grid-area: right;`
-const LeftArrow = styled(Icon)`grid-area: left;`
+const UpArrow = styled(Icon)`
+  grid-area: top;
+`;
+const DownArrow = styled(Icon)`
+  grid-area: bottom;
+`;
+const RightArrow = styled(Icon)`
+  grid-area: right;
+`;
+const LeftArrow = styled(Icon)`
+  grid-area: left;
+`;
 
 export default function PathActions({ store }) {
   return (
@@ -61,4 +69,4 @@ export default function PathActions({ store }) {
 
 PathActions.propTypes = {
   store: PropTypes.object.isRequired
-}
+};

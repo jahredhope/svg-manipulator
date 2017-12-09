@@ -1,34 +1,20 @@
-global.__SERVER_RENDER = true;
-// Mock navigator for CodeMirror
-// global.navigator = global.navigator || {};
-global.window = global;
-// window.navigator = window.navigator || {};
-// window.document = window.document || {
-//   querySelectorAll: () => {},
-//   createElement: () => ({
-//     setAttribute: () => {},
-//     childNodes: []
-//   })
-// };
-
-/* eslint-disable import/first */
-
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-const App = require('./App').default;
-// import App from './App';
+import App from './App';
 import Store from './Store';
 
 const store = new Store();
 
 import { ServerStyleSheet } from 'styled-components';
 
-function template({ css, js, ...rest }) {
+function template({ css, js }) {
   console.log('Rendering', 'css', css);
   console.log('Rendering', 'js', js);
   const sheet = new ServerStyleSheet();
-  const appHtml = ReactDOMServer.renderToString(sheet.collectStyles(<App store={store} />));
+  const appHtml = ReactDOMServer.renderToString(
+    sheet.collectStyles(<App store={store} />)
+  );
   // const appHtml = ReactDOMServer.renderToString(sheet.collectStyles(<App store={store} />));
   const styleTags = sheet.getStyleTags();
   return `
@@ -38,7 +24,9 @@ function template({ css, js, ...rest }) {
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="shortcut icon" href="/favicon.ico">
-      ${css.map(fileName => `<link rel="stylesheet" href="${fileName}" />`).join('\n')}
+      ${css
+        .map(fileName => `<link rel="stylesheet" href="${fileName}" />`)
+        .join('\n')}
       <title>React App</title>
       ${styleTags}
     </head>
@@ -53,7 +41,8 @@ function template({ css, js, ...rest }) {
 
 export default data => {
   const entryPointToRender = data.webpackStats.compilation.entrypoints.index;
-  const entryPointToRenderVendor = data.webpackStats.compilation.entrypoints.vendor;
+  const entryPointToRenderVendor =
+    data.webpackStats.compilation.entrypoints.vendor;
   const jsFilesToRender = []
     .concat(
       ...[

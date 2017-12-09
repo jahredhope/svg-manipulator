@@ -11,7 +11,6 @@ const isInteractive = true;
 
 const webpackConfig = require('../config/webpack.config.dev');
 
-
 const compiler = Webpack(webpackConfig);
 const devServer = new WebpackDevServer(compiler, {
   compress: true,
@@ -22,7 +21,7 @@ const devServer = new WebpackDevServer(compiler, {
   host: host
 });
 
-devServer.listen(port, (err, result) => {
+devServer.listen(port, err => {
   if (err) {
     return console.log(err);
   }

@@ -1,3 +1,7 @@
+if (typeof window === 'undefined') {
+  throw new Error('got here vendor');
+}
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,7 +14,13 @@ import Header from './Header';
 import PathActions from './PathActions';
 import styled from 'styled-components';
 
-import { JustifyCenter, Columns, Card, Section, HeadedBox } from './styleguide';
+import {
+  JustifyCenter,
+  Columns,
+  Card,
+  Section,
+  HeadedBox
+} from '../styleguide';
 
 import './reset';
 
@@ -93,7 +103,9 @@ export default class App extends React.Component {
                   checked={store.simplifyOnTransform}
                   onChange={store.toggleSimplifyOnTransform}
                 />
-                <label htmlFor="simplifyOnTransform">Simplify On Transform</label>
+                <label htmlFor="simplifyOnTransform">
+                  Simplify On Transform
+                </label>
               </Section>
             </Card>
             {store.showHelp && <Help />}

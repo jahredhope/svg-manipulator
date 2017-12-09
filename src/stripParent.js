@@ -1,4 +1,3 @@
-
 export default function stripParent(node) {
   if (Array.isArray(node)) {
     return node.map(stripParent);

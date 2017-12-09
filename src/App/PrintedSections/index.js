@@ -27,7 +27,7 @@ var options = {
   mode: 'htmlmixed'
 };
 
-export default observer(function({ store, isClient }) {
+function PrintedSections({ store, isClient }) {
   return (
     <PrintedSectionsColumn>
       {isClient && (
@@ -44,4 +44,11 @@ export default observer(function({ store, isClient }) {
       )}
     </PrintedSectionsColumn>
   );
-});
+}
+
+PrintedSections.propTypes = {
+  store: PropTypes.object.isRequired,
+  isClient: PropTypes.bool.isRequired
+};
+
+export default observer(PrintedSections);

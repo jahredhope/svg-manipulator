@@ -15,9 +15,11 @@ const Heading = styled.div`
   padding: 12px 6px 6px;
 `;
 
-const Content = styled.div`font-size: var(--font-size-standard);`;
+const Content = styled.div`
+  font-size: var(--font-size-standard);
+`;
 
-export default function({ heading, children }) {
+export default function HeadedBox({ heading, children }) {
   return (
     <Container>
       <Heading>{heading}</Heading>
@@ -25,3 +27,8 @@ export default function({ heading, children }) {
     </Container>
   );
 }
+
+HeadedBox.propTypes = {
+  heading: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
+};
