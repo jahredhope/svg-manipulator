@@ -42,7 +42,7 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "is-svg": "^2.1.0",
-    "jest": "^21.2.1",
+    "jest": "^22.1.2",
     "json-loader": "^0.5.7",
     "libxmljs": "^0.18.7",
     "lint-staged": "^6.0.0",
