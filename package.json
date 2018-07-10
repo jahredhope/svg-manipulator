@@ -55,7 +55,7 @@
     "object-assign": "^4.1.1",
     "path-ast": "^1.1.0",
     "path-exists": "^3.0.0",
-    "postcss-loader": "^2.0.9",
+    "postcss-loader": "^2.1.6",
     "prettier": "^1.9.1",
     "promise": "^8.0.1",
     "raf": "^3.4.0",
