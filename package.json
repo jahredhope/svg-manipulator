@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.1.1",
-    "@babel/preset-env": "^7.0.0-beta.34",
+    "@babel/preset-env": "^7.1.0",
     "@commitlint/config-angular": "^5.1.1",
     "ace-code-editor": "^1.2.3",
     "autoprefixer": "^7.2.1",
