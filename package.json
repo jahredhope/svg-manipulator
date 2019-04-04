@@ -54,7 +54,7 @@
     "node-uuid": "^1.4.8",
     "object-assign": "^4.1.1",
     "path-ast": "^1.1.0",
-    "path-exists": "^3.0.0",
+    "path-exists": "^4.0.0",
     "postcss-loader": "^2.0.9",
     "prettier": "^1.9.1",
     "promise": "^8.0.1",
