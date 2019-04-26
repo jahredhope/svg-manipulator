@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.34",
+    "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.0.0-beta.34",
     "@commitlint/config-angular": "^5.1.1",
     "ace-code-editor": "^1.2.3",
