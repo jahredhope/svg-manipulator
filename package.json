@@ -39,7 +39,7 @@
     "gzip-size": "^4.1.0",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.4",
-    "husky": "^0.14.3",
+    "husky": "^2.2.0",
     "identity-obj-proxy": "^3.0.0",
     "is-svg": "^2.1.0",
     "jest": "^21.2.1",
