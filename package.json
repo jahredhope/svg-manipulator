@@ -41,7 +41,7 @@
     "http-proxy-middleware": "^0.17.4",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "is-svg": "^2.1.0",
+    "is-svg": "^4.2.0",
     "jest": "^21.2.1",
     "json-loader": "^0.5.7",
     "libxmljs": "^0.18.7",
