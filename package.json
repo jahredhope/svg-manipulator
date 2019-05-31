@@ -20,7 +20,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "chalk": "^2.3.0",
     "codemirror": "^5.32.0",
-    "commitlint": "^5.2.5",
+    "commitlint": "^8.0.0",
     "connect-history-api-fallback": "^1.5.0",
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.7",
