@@ -22,7 +22,7 @@
     "codemirror": "^5.32.0",
     "commitlint": "^5.2.5",
     "connect-history-api-fallback": "^1.5.0",
-    "cross-spawn": "^5.1.0",
+    "cross-spawn": "^7.0.0",
     "css-loader": "^0.28.7",
     "detect-port": "^1.2.2",
     "dotenv": "^4.0.0",
