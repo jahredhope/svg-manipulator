@@ -64,7 +64,7 @@
     "react-codemirror": "^1.0.0",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.2.0",
-    "react-router": "^4.2.0",
+    "react-router": "^5.1.0",
     "react-syntax-highlighter": "^6.0.4",
     "recursive-readdir": "^2.2.1",
     "static-site-generator-webpack-plugin": "^3.4.1",
