@@ -7,7 +7,7 @@
     "@babel/preset-env": "^7.0.0-beta.34",
     "@commitlint/config-angular": "^5.1.1",
     "ace-code-editor": "^1.2.3",
-    "autoprefixer": "^7.2.1",
+    "autoprefixer": "^9.6.2",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.3",
     "babel-jest": "^21.2.0",
